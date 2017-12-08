@@ -50,13 +50,9 @@ class SignIn extends Component {
         if (nextProps.signin) {
           if(nextProps.signin.status === 'success'){
 
-             this.props.history.push('/home')
-            /* this.setState({
-                status:nextProps.signin.status,
-                msg:nextProps.signin.msg
-              })*/
-          }
-          else{
+            this.props.history.push('/home')
+                    
+            }else{
             this.setState({
                 status:nextProps.signin.status,
                 msg:nextProps.signin.msg

@@ -8,11 +8,11 @@ const headers = {
 export function INIT(){
   return  dispatch => {
       
-     axios.get(URL+"user",{withCredentials: true})
+     axios.get(URL+"user")
         .then(function (response) {
            
           
-                return dispatch({ type : "SIGNIN_RESULT", payload : response.data } )
+         return dispatch({ type : "SIGNIN_RESULT", payload : response.data } )
   
         })
               
@@ -25,16 +25,18 @@ export function INIT(){
 export function SignIn(data){
     return  dispatch => {
 
-          fetch(URL+"login", {
+          fetch(URL+"user/signin", {
             method: 'POST',
             headers: {
                 ...headers,
                 'Content-Type': 'application/json'
             },
-            credentials:'include',
+          
             body: JSON.stringify(data)
         }).then(response => { return response.json(); })
         .then(function(data) {
+          if(data.response.status ==='success')
+            localStorage.setItem("id",data.users.id);
           dispatch({ type : "SIGNIN_RESULT", payload : data } )
         }).catch(error => {
           return dispatch({ type : "SIGNIN_ERROR", payload : error } )

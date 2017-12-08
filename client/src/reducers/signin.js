@@ -2,6 +2,7 @@
 var signin_initialstate ={
     status:"",
     msg:"",
+    id:"",
     currentfolderid:""
 
 }
@@ -10,9 +11,9 @@ export default function(state=signin_initialstate,action){
     if(action.type === "SIGNIN_RESULT"){
         return{
             ...state,
-            status:action.payload.status,
-            msg:action.payload.msg,
-                
+            status:action.payload.response.status,
+            msg:action.payload.response.msg,
+            id:action.payload.users.id
         }
     }
     if(action.type === "SIGNIN_ERROR"){
