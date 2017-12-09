@@ -51,8 +51,8 @@ public class ContentController  {
 
     @RequestMapping(path="/upload",method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ContentLoadResponse fileupload(@RequestParam("file") MultipartFile multipartFile,
-                                          @RequestParam("fileparent") int fileparent,
-                                          @RequestParam("userid") int userid){
+                                          @RequestParam("fileparent") String fileparent,
+                                          @RequestParam("userid") String userid){
 
        // String email = (String) session.getAttribute("email");
 
@@ -69,7 +69,8 @@ public class ContentController  {
             Path path = Paths.get(filepath);
             Files.write(path, bytes);
 
-            contentLoadResponse = contentService.UploadFile(multipartFile.getOriginalFilename(),filepath,fileparent,userid);
+            contentLoadResponse = contentService.UploadFile(multipartFile.getOriginalFilename(),
+                    filepath,Integer.parseInt(fileparent),Integer.parseInt(userid));
 
 
         } catch (IOException e) {

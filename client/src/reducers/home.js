@@ -47,7 +47,7 @@ export default function(state=home_initialstate,action){
         return{
             ...state,
             files:action.payload.contents,
-            currentfolderid:action.payload.currentfolderid,
+            currentfolderid:action.payload.parentfolderid,
             status:action.payload.response.status,
             msg:""
         }

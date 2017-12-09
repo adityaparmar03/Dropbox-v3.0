@@ -1,10 +1,13 @@
 package in.adityaparmar.server.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class Mapping {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer mappingid;
@@ -12,6 +15,11 @@ public class Mapping {
     private Integer folderid;
 
     private Integer contentid;
+
+    private Integer userid;
+
+    private Integer groupid;
+
 
     public Integer getMappingid() {
         return mappingid;
@@ -35,5 +43,21 @@ public class Mapping {
 
     public void setContentid(Integer contentid) {
         this.contentid = contentid;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public Integer getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(Integer groupid) {
+        this.groupid = groupid;
     }
 }
