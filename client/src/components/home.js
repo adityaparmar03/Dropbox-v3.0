@@ -205,7 +205,7 @@ class Home extends Component {
         return (<tr key={file._id}>
             <td style={{width:"50%"}}>
             <img src={require('../images/file.png')} alt="" style={{width:"50px",height:"50px"}}/>    
-            <a  href={"http://localhost:9000/files/"+file.virtualname} target="_blank">{file.originalname}</a>
+            <a  href={"http://localhost:8080/"+file.virtualname} target="_blank">{file.originalname}</a>
             {this.star(file.star,file._id)}
             </td>
             <td>
@@ -221,7 +221,7 @@ class Home extends Component {
             <ul className="dropdown-menu" role="menu">
                 
                 <li role="presentation">
-                <a href={"http://localhost:9000/files/"+file.virtualname} download>Download</a></li>
+                <a href={"http://localhost:8080/"+file.virtualname} download>Download</a></li>
                 <li><a data-toggle="modal" data-target="#fileModal" onClick={()=>this.share(file)}>Share</a></li>
                 <li><a onClick={()=>this.props.deleteContent(this.state.currentfolderid,
                     file,this.state.userid )}>Delete</a></li>

@@ -62,7 +62,8 @@ public class ContentController  {
 
         Content content = new Content();
         Date date = new Date();
-        String filepath = UPLOADED_FOLDER +date+"_"+ multipartFile.getOriginalFilename();
+        String virtualname= date+"_"+ multipartFile.getOriginalFilename();
+        String filepath = UPLOADED_FOLDER + virtualname;
         Response response = new Response();
         ContentLoadResponse contentLoadResponse = new ContentLoadResponse();
         try {
@@ -74,7 +75,7 @@ public class ContentController  {
             Files.write(path, bytes);
 
             contentLoadResponse = contentService.UploadFile(multipartFile.getOriginalFilename(),
-                    filepath,Integer.parseInt(fileparent),Integer.parseInt(userid));
+                    virtualname,Integer.parseInt(fileparent),Integer.parseInt(userid));
 
 
         } catch (IOException e) {
