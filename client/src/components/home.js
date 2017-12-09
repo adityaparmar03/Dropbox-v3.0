@@ -150,8 +150,8 @@ class Home extends Component {
                
                     const payload = new FormData();
                     payload.append('file', event.target.files[0]);
-                    payload.append('userid',"1");
-                    payload.append('fileparent',"root");
+                    payload.append('userid',this.state.userid);
+                    payload.append('fileparent',this.state.currentfolderid);
                     this.props.UploadFile(payload);
                     event.target.value = null;
                

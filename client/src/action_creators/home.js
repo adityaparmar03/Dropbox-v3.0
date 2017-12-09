@@ -11,13 +11,13 @@ export function INIT(callback,user){
 
                 dispatch({ type : "HOME_RESULT", payload : response.data } )
                
-                axios.post(URL+"folder/root",{userid:userid})
+                axios.post(URL+"folder/root",user)
                 .then(function (response) {
   
                   var rootid = response.data.rootid
                   dispatch({ type : "ROOT_RESULT", payload : response.data } )
                   
-                  axios.post(URL+"folder/load", {"userid":1,"parentfolderid":1})
+                  axios.post(URL+"folder/load", {"userid":user.id,"contentid":rootid})
                   .then((response)=>{
                     callback(1)
                     return dispatch({ type : "FOLDER_RESULT", payload : response.data } )

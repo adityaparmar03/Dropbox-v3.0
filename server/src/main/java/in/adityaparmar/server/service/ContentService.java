@@ -1,9 +1,11 @@
 package in.adityaparmar.server.service;
 
 import in.adityaparmar.server.entity.Content;
+import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
 import in.adityaparmar.server.entity.response.Response;
+import in.adityaparmar.server.entity.response.RootResponse;
 import in.adityaparmar.server.repository.ContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,26 @@ public class ContentService {
     private ContentRepository contentRepository;
 
 
-    public Content getRoot(){
+    public RootResponse getRoot(User user){
 
+        RootResponse rootResponse = new RootResponse();
+        Response response = new Response();
+        try{
 
+            Content content =  contentRepository.findAllByUseridAndOriginalname(user.getId(),"root");
+            rootResponse.setRootid(content.getContentid());
+            response.setStatus("success");
+            response.setMsg("");
+            rootResponse.setResponse(response);
+
+        }
+        catch (Exception e){
+            rootResponse.setRootid(0);
+            response.setStatus("error");
+            response.setMsg("Something went wrong.");
+            rootResponse.setResponse(response);
+        }
+        return rootResponse;
     }
     public ContentLoadResponse getFolderData(Folder folder){
 
@@ -48,7 +67,7 @@ public class ContentService {
         return contentLoadResponse;
     }
 
-    public ContentLoadResponse UploadFile(String name, String path){
+    public ContentLoadResponse UploadFile(String name, String path, int parentfolderid, int userid ){
         Response response = new Response();
         ContentLoadResponse contentLoadResponse = new ContentLoadResponse();
 
@@ -60,7 +79,7 @@ public class ContentService {
             content.setVirtualname(path);
             content.setStar("NO");
             content.setDate(date.toString());
-            content.setUserid(1);
+            content.setUserid(userid);
             content.setType("file");
 
             contentRepository.save(content);

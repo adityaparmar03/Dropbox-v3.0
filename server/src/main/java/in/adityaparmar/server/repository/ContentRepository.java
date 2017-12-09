@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ContentRepository extends CrudRepository<Content,Integer> {
     List<Content> findAllByUserid(int userid);
+
+    Content findAllByUseridAndOriginalname(int userid, String root);
 }

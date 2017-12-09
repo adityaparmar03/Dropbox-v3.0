@@ -6,6 +6,7 @@ import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
 import in.adityaparmar.server.entity.response.Response;
+import in.adityaparmar.server.entity.response.RootResponse;
 import in.adityaparmar.server.service.ContentService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class ContentController  {
     }
 
     @RequestMapping(path="/root",method = RequestMethod.POST)
-    public ContentLoadResponse getRoot(@RequestBody User user) {
+    public RootResponse getRoot(@RequestBody User user) {
         // This returns a JSON with the users
         return contentService.getRoot(user);
     }
@@ -50,8 +51,8 @@ public class ContentController  {
 
     @RequestMapping(path="/upload",method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ContentLoadResponse fileupload(@RequestParam("file") MultipartFile multipartFile,
-                                          @RequestParam("fileparent") String fileparent,
-                                          @RequestParam("userid") String userid){
+                                          @RequestParam("fileparent") int fileparent,
+                                          @RequestParam("userid") int userid){
 
        // String email = (String) session.getAttribute("email");
 
@@ -68,7 +69,7 @@ public class ContentController  {
             Path path = Paths.get(filepath);
             Files.write(path, bytes);
 
-            contentLoadResponse = contentService.UploadFile(multipartFile.getOriginalFilename(),fileparent);
+            contentLoadResponse = contentService.UploadFile(multipartFile.getOriginalFilename(),filepath,fileparent,userid);
 
 
         } catch (IOException e) {
