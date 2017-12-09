@@ -47,7 +47,11 @@ public class ContentController  {
         // This returns a JSON with the users
         return contentService.getRoot(user);
     }
-
+    @RequestMapping(path="/createfolder",method = RequestMethod.POST)
+    public ContentLoadResponse CreateFolder(@RequestBody Folder folder) {
+        // This returns a JSON with the users
+        return contentService.CreateFolder(folder);
+    }
 
     @RequestMapping(path="/upload",method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ContentLoadResponse fileupload(@RequestParam("file") MultipartFile multipartFile,

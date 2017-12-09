@@ -80,9 +80,10 @@ export default function(state=home_initialstate,action){
     if(action.type === "CREARE_FOLDER_RESULT"){
         return{
             ...state,
-            files:[...state.files,action.payload.content],
-            status:action.payload.status,
-            msg:action.payload.msg
+            files:action.payload.contents,
+            currentfolderid:action.payload.parentfolderid,
+            status:action.payload.response.status,
+            msg:action.payload.response.msg,
         }
     }
 

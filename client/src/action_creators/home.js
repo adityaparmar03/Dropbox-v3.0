@@ -77,7 +77,7 @@ export function UploadFolder(parentfolderid,foldername,userid){
       if(foldername!=="")
       return  dispatch => {
          
-          axios.post(URL+"upload/createfolder", {"parentfolderid":parentfolderid,"foldername":foldername,"userid":userid})
+          axios.post(URL+"folder/createfolder", {"contentid":parentfolderid,"foldername":foldername,"userid":userid})
             .then(function (response) {
               return dispatch({ type : "CREARE_FOLDER_RESULT", payload : response.data } )
             })

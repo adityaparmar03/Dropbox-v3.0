@@ -140,7 +140,7 @@ public class ContentService {
         return contentLoadResponse;
     }
 
-    public ContentLoadResponse CreateFolder(String name, String path, int parentfolderid, int userid ){
+    public ContentLoadResponse CreateFolder(Folder folder ){
 
         Response response = new Response();
         ContentLoadResponse contentLoadResponse = new ContentLoadResponse();
@@ -151,12 +151,12 @@ public class ContentService {
             // Add content start
             Date date = new Date();
             Content content = new Content();
-            content.setOriginalname(name);
-            content.setVirtualname(path);
+            content.setOriginalname(folder.getFoldername());
+            content.setVirtualname(folder.getFoldername());
             content.setStar("NO");
             content.setDate(date.toString());
-            content.setUserid(userid);
-            content.setType("file");
+            content.setUserid(folder.getUserid());
+            content.setType("folder");
 
             content = contentRepository.save(content);
 
@@ -165,14 +165,14 @@ public class ContentService {
             // Mapping Start
 
             mapping.setContentid(content.getContentid());
-            mapping.setFolderid(parentfolderid);
-            mapping.setUserid(userid);
+            mapping.setFolderid(folder.getContentid());
+            mapping.setUserid(folder.getUserid());
             mappingRepository.save(mapping);
 
             // Mapping End
 
 
-            List<Mapping> mapping2 = mappingRepository.findMappingByFolderidAndUserid(parentfolderid,userid);
+            List<Mapping> mapping2 = mappingRepository.findMappingByFolderidAndUserid(folder.getContentid(),folder.getUserid());
 
             List<Integer> contentid = mapping2.stream().map(mapping1 -> mapping1.getContentid()).collect(Collectors.toList());
 
@@ -180,9 +180,9 @@ public class ContentService {
 
             contentLoadResponse.setContents(contentRepository.findAllByContentidIn(contentid));
             response.setStatus("success");
-            response.setMsg("File Successfully uploaded.");
+            response.setMsg("Folder Successfully Created.");
             contentLoadResponse.setResponse(response);
-            contentLoadResponse.setParentfolderid(parentfolderid);
+            contentLoadResponse.setParentfolderid(folder.getContentid());
 
         }
         catch (Exception e){
