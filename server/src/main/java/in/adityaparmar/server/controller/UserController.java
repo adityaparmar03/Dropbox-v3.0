@@ -43,6 +43,14 @@ public class UserController {
 
     }
 
+    @RequestMapping(path="/checksession",method = RequestMethod.POST) // Map ONLY POST Requests
+    public SignInResponse CheckSession (@RequestBody User user) {
+
+
+        return userService.CheckSession(user);
+
+    }
+
 
 
 

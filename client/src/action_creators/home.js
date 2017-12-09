@@ -3,24 +3,21 @@ import {URL} from '../constant';
 //const headers = {
 //    'Accept': 'application/json'
 //};
-export function INIT(callback){
+export function INIT(callback,user){
     return  dispatch => {
         
-      /* axios.get(URL+"user",{withCredentials: true})
+      axios.post(URL+"user/checksession",user)
           .then(function (response) {
-              var userid = response.data.user._id;
-              if(userid===undefined || userid===""){
-                return dispatch({ type : "HOME_RESULT", payload : response.data } )
-              }
-              else{
+
                 dispatch({ type : "HOME_RESULT", payload : response.data } )
-                axios.post(URL+"home/root",{userid:userid})
+               
+                axios.post(URL+"folder/root",{userid:userid})
                 .then(function (response) {
   
                   var rootid = response.data.rootid
                   dispatch({ type : "ROOT_RESULT", payload : response.data } )
-                  */
-                  axios.get(URL+"folder/load", {"userid":1,"parentfolderid":1})
+                  
+                  axios.post(URL+"folder/load", {"userid":1,"parentfolderid":1})
                   .then((response)=>{
                     callback(1)
                     return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
@@ -28,20 +25,20 @@ export function INIT(callback){
                   }).catch(function (error) {
                   return dispatch({ type : "HOME_ERROR", payload : error } )
                   });
-             /*
+             
         
                 })
                 .catch(function (error) {
                   return dispatch({ type : "HOME_ERROR", payload : error } )
                 });
-              }
+              
              
              
-           
+            
             })
           .catch(function (error) {
             return dispatch({ type : "HOME_ERROR", payload : error } )
-          });*/
+          });
          
     }
 }
@@ -65,7 +62,7 @@ export function LOGOUT(){
 export function UploadFile(payload){
       return  dispatch => {
           
-          axios.post(URL+"upload", payload)
+          axios.post(URL+"folder/upload", payload)
             .then(function (response) {
               return dispatch({ type : "UPLOAD_RESULT", payload : response.data } )
             })

@@ -56,32 +56,49 @@ class Home extends Component {
       }
      // On Load 
     componentDidMount() {
-
-        if(this.state.currentfolderid === "")
-         {
-            this.props.INIT(function(rootid){
-                window.history.pushState({data:rootid},"",'/home')
-            })
-         }
-         window.onpopstate = (event)=> {
-                console.log(event)
-                if(event.state==null || event.state == undefined)
-                {
-                    this.props.INIT(function(rootid){
-                        window.history.pushState({data:rootid},"",'/home')
-                    })
-
-                }
-                else if(event.state.hasOwnProperty('state')){
-                    this.props.INIT(function(rootid){
-                        window.history.pushState({data:rootid},"",'/home')
-                    })
-                }
-                else{
-                    this.props.LOADFOLDER(this.state.userid,event.state.data)
-                }
+        if(typeof(Storage) !== "undefined") {
+            
+                if (localStorage.id) {
+                 
+                    if(this.state.currentfolderid === "")
+                    {
+                       this.props.INIT(function(rootid){
+                           window.history.pushState({data:rootid},"",'/home')
+                       },{id:localStorage.id})
+                    }
+                    window.onpopstate = (event)=> {
+                           console.log(event)
+                           if(event.state==null || event.state == undefined)
+                           {
+                               this.props.INIT(function(rootid){
+                                   window.history.pushState({data:rootid},"",'/home')
+                               },{id:localStorage.id})
+           
+                           }
+                           else if(event.state.hasOwnProperty('state')){
+                               this.props.INIT(function(rootid){
+                                   window.history.pushState({data:rootid},"",'/home')
+                               },{id:localStorage.id})
+                           }
+                           else{
+                               this.props.LOADFOLDER(this.state.userid,event.state.data)
+                           }
+                           
+                       } 
                 
-            } 
+                
+                
+                
+                
+                
+                
+                
+                
+                } 
+        }
+       
+
+       
          
           
        
@@ -132,9 +149,9 @@ class Home extends Component {
         
                
                     const payload = new FormData();
-                    payload.append('myfile', event.target.files[0]);
-                    payload.append('userid',this.state.userid);
-                    payload.append('parentfolderid',this.state.currentfolderid);
+                    payload.append('file', event.target.files[0]);
+                    payload.append('userid',"1");
+                    payload.append('fileparent',"root");
                     this.props.UploadFile(payload);
                     event.target.value = null;
                

@@ -14,12 +14,12 @@ export default function(state=home_initialstate,action){
     if(action.type === "HOME_RESULT"){
         return{
             ...state,
-            status:action.payload.status,
+            status:action.payload.response.status,
             //msg:action.payload.msg,
-            firstname:action.payload.user.firstname,  
-            lastname:action.payload.user.lastname,
-            email:action.payload.user.email,
-            userid:action.payload.user._id,
+            firstname:action.payload.users.firstname,  
+            lastname:action.payload.users.lastname,
+            email:action.payload.users.email,
+            userid:action.payload.users.id,
             msg:""
                
         }
@@ -32,34 +32,28 @@ export default function(state=home_initialstate,action){
         }
     }
 
+
     if(action.type === "UPLOAD_RESULT"){
         return{
             ...state,
-            files:[...state.files,action.payload.content],
-            status:action.payload.status,
-            msg:action.payload.msg
+            //files:[...state.files,action.payload.contents],
+            files:action.payload.contents,
+            status:action.payload.response.statuss,
+            msg:action.payload.response.msg
                  
         }
     }
     if(action.type === "FOLDER_RESULT"){
         return{
             ...state,
-            files:action.payload,
+            files:action.payload.contents,
             currentfolderid:action.payload.currentfolderid,
-            status:action.payload.status,
+            status:action.payload.response.status,
             msg:""
         }
     }
     
-    if(action.type === "UPLOAD_RESULT"){
-        return{
-            ...state,
-            files:[...state.files,action.payload.content],
-            status:action.payload.status,
-            msg:action.payload.msg
-                 
-        }
-    }
+   
     if(action.type === "UPLOAD_ERROR"){
         return{
             ...state,
