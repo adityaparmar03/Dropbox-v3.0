@@ -14,4 +14,6 @@ public interface ContentRepository extends CrudRepository<Content,Integer> {
 
     List<Content> findAllByContentidIn( List<Integer> contentid);
 
+
+
 }

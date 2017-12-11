@@ -6,15 +6,15 @@ import java.util.List;
 
 public class ContentLoadResponse {
 
-    List<Content> contents;
+    List<Contents> contents;
     Response response;
     int parentfolderid;
 
-    public List<Content> getContents() {
+    public List<Contents> getContents() {
         return contents;
     }
 
-    public void setContents(List<Content> contents) {
+    public void setContents(List<Contents> contents) {
         this.contents = contents;
     }
 

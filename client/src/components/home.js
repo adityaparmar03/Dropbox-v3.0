@@ -184,7 +184,7 @@ class Home extends Component {
             var star = file.star;
             this.members=[];
             this.sharemsg = "Only you"
-            /*if(file.members.length>0){
+            if(file.members.length>0){
               
               
                this.members = file.members.map((member,i)=> member.firstname+" "+member.lastname+"<br>")
@@ -202,7 +202,7 @@ class Home extends Component {
                 this.sharemsg = "Only you"
                 this.members.push(this.state.firstname+" "+this.state.lastname)
                
-            }*/
+            }
 
         return (<tr key={file._id}>
             <td style={{width:"50%"}}>
@@ -237,7 +237,7 @@ class Home extends Component {
             this.members=[];
             this.sharemsg = "Only you"
             this.image = require('../images/folder.png')
-            /*
+            
             if(file.members.length>0){
                 this.image = require('../images/gfolder.png')
                 this.members = file.members.map((member,i)=> member.firstname+" "+member.lastname+"<br>")
@@ -255,7 +255,7 @@ class Home extends Component {
                 this.sharemsg = "Only you"
                 this.members.push(this.state.firstname+" "+this.state.lastname)
                 this.image = require('../images/folder.png')
-            }*/
+            }
         return ( <tr key={file.contentid}>
             <td  style={{width:"50%"}}>
             

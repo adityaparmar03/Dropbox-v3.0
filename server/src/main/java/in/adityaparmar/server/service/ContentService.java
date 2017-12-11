@@ -6,14 +6,17 @@ import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.request.Share;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
+import in.adityaparmar.server.entity.response.Contents;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.RootResponse;
 import in.adityaparmar.server.repository.ContentRepository;
 import in.adityaparmar.server.repository.MappingRepository;
+import in.adityaparmar.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.ConstantCallSite;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +28,8 @@ public class ContentService {
     private ContentRepository contentRepository;
     @Autowired
     private MappingRepository mappingRepository;
-
+    @Autowired
+    private UserRepository userRepository;
 
     public RootResponse getRoot(User user){
 
@@ -66,7 +70,24 @@ public class ContentService {
 
             contentRepository.findAllByContentidIn(contentid);
 
-            contentLoadResponse.setContents(contentRepository.findAllByContentidIn(contentid));
+
+            List<Content> contents = contentRepository.findAllByContentidIn(contentid);
+            List<Contents> mixture = new ArrayList<>();
+            for(Content content : contents){
+                Contents mix = new Contents();
+                mix.setContentid(content.getContentid());
+                mix.setOriginalname(content.getOriginalname());
+                mix.setVirtualname(content.getVirtualname());
+                mix.setDate(content.getDate());
+                mix.setStar(content.getStar());
+                mix.setType(content.getType());
+                mix.setUserid(content.getUserid());
+                mix.setMembers(Members(content.getContentid()));
+
+                mixture.add(mix);
+
+            }
+            contentLoadResponse.setContents(mixture);
             response.setStatus("success");
             response.setMsg("");
             contentLoadResponse.setResponse(response);
@@ -121,7 +142,24 @@ public class ContentService {
 
             contentRepository.findAllByContentidIn(contentid);
 
-            contentLoadResponse.setContents(contentRepository.findAllByContentidIn(contentid));
+            List<Content> contents = contentRepository.findAllByContentidIn(contentid);
+            List<Contents> mixture = new ArrayList<>();
+            for(Content icontent : contents){
+                Contents mix = new Contents();
+                mix.setContentid(icontent.getContentid());
+                mix.setOriginalname(icontent.getOriginalname());
+                mix.setVirtualname(icontent.getVirtualname());
+                mix.setDate(icontent.getDate());
+                mix.setStar(icontent.getStar());
+                mix.setType(icontent.getType());
+                mix.setUserid(icontent.getUserid());
+                mix.setMembers(Members(icontent.getContentid()));
+
+                mixture.add(mix);
+
+            }
+            contentLoadResponse.setContents(mixture);
+
             response.setStatus("success");
             response.setMsg("File Successfully uploaded.");
             contentLoadResponse.setResponse(response);
@@ -179,7 +217,24 @@ public class ContentService {
 
             contentRepository.findAllByContentidIn(contentid);
 
-            contentLoadResponse.setContents(contentRepository.findAllByContentidIn(contentid));
+            List<Content> contents = contentRepository.findAllByContentidIn(contentid);
+            List<Contents> mixture = new ArrayList<>();
+            for(Content icontent : contents){
+                Contents mix = new Contents();
+                mix.setContentid(icontent.getContentid());
+                mix.setOriginalname(icontent.getOriginalname());
+                mix.setVirtualname(icontent.getVirtualname());
+                mix.setDate(icontent.getDate());
+                mix.setStar(icontent.getStar());
+                mix.setType(icontent.getType());
+                mix.setUserid(icontent.getUserid());
+                mix.setMembers(Members(icontent.getContentid()));
+
+                mixture.add(mix);
+
+            }
+            contentLoadResponse.setContents(mixture);
+
             response.setStatus("success");
             response.setMsg("Folder Successfully Created.");
             contentLoadResponse.setResponse(response);
@@ -241,5 +296,18 @@ public class ContentService {
 
 
         return response;
+    }
+    public List<User> Members(int id){
+
+
+
+        List<Mapping> content = mappingRepository.findAllByContentid(id);
+        List<Integer> userids = content.stream().map(content1 -> content1.getUserid()).collect(Collectors.toList());
+
+
+        List<User> user = userRepository.findUsersByIdIn(userids);
+
+        return user;
+
     }
 }

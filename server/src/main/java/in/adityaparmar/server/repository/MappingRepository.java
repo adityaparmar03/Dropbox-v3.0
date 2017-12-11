@@ -9,4 +9,6 @@ import java.util.List;
 public interface MappingRepository  extends CrudRepository<Mapping,Integer> {
 
         List<Mapping> findMappingByFolderid(int folderid);
+
+        List<Mapping> findAllByContentid(int contentid);
 }

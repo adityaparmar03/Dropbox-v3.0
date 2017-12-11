@@ -4,6 +4,7 @@ package in.adityaparmar.server.repository;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 
+import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
@@ -17,4 +18,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     User findUsersByEmailAndPassword(String email, String password);
     List<User> findUsersByEmailStartsWith(String keyword);
     List<User> findUsersByFirstnameStartsWith(String keyword);
+
+    List<User> findUsersByIdIn(List<Integer> userid);
 }
