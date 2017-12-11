@@ -22,8 +22,11 @@ export function UPDATE(email,password,firstname,lastname,aboutme,interests,useri
     return  dispatch => {
        
         axios.post(URL+"user/update", {
+          id:userid,
           firstname:firstname,
           lastname:lastname,
+          email:email,
+          password:password,
           aboutme:aboutme,
           interests:interests,
           all:firstname+" "+lastname+" ("+email+")"

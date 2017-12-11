@@ -10,6 +10,7 @@ import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.request.General;
 import in.adityaparmar.server.entity.request.Share;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
+import in.adityaparmar.server.entity.response.Contents;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.RootResponse;
 import in.adityaparmar.server.service.ContentService;
@@ -119,6 +120,12 @@ public class ContentController  {
         // This returns a JSON with the users
 
         return contentService.DeleteFile(data);
+    }
+    @RequestMapping(path="/dostar",method = RequestMethod.POST)
+    public Response dostar(@RequestBody Contents data) {
+        // This returns a JSON with the users
+
+        return contentService.dostar(data);
     }
 
 

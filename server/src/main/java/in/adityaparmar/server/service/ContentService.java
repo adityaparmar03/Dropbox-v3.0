@@ -7,10 +7,7 @@ import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Delete;
 import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.request.Share;
-import in.adityaparmar.server.entity.response.ContentLoadResponse;
-import in.adityaparmar.server.entity.response.Contents;
-import in.adityaparmar.server.entity.response.Response;
-import in.adityaparmar.server.entity.response.RootResponse;
+import in.adityaparmar.server.entity.response.*;
 import in.adityaparmar.server.repository.ActivityRepository;
 import in.adityaparmar.server.repository.ContentRepository;
 import in.adityaparmar.server.repository.MappingRepository;
@@ -360,6 +357,43 @@ public class ContentService {
 
         return user;
 
+    }
+
+    public Response dostar(Contents data){
+
+        Response response = new Response();
+        try{
+
+            Content content = new Content();
+            content.setContentid(data.getContentid());
+            content.setOriginalname(data.getOriginalname());
+            content.setVirtualname(data.getVirtualname());
+            System.out.println(data.getStar());
+            if(data.getStar().equals("NO"))
+                content.setStar("YES");
+            else
+                content.setStar("NO");
+            System.out.println(content.getStar());
+            content.setDate(data.getDate());
+            content.setUserid(data.getUserid());
+            content.setType(data.getType());
+
+
+            contentRepository.save(content);
+
+            response.setStatus("success");
+            response.setMsg("");
+
+
+
+        }
+        catch (Exception e){
+            response.setStatus("error");
+            response.setMsg("Something went wrong, Try Again.");
+
+
+        }
+        return response;
     }
 
 

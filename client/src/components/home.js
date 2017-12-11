@@ -163,13 +163,13 @@ class Home extends Component {
         
     };
     
-    star(isstar,contentid)
+    star(file)
     {
-        if(isstar==="YES"){
-            return <img onClick/*onClick={()=>this.props.dostar(contentid,"NO",this.state.currentfolderid,this.state.userid)} */ src={require('../images/bluestar.png')} alt="" style={{width:"20px",height:"20px"}}/>           
+        if(file.star==="YES"){
+            return <img onClick={()=>this.props.dostar(file,this.state.userid,this.state.currentfolderid)}  src={require('../images/bluestar.png')} alt="" style={{width:"20px",height:"20px"}}/>           
         }
         else{
-            return <img /*onClick={()=>this.props.dostar(contentid,"YES",this.state.currentfolderid,this.state.userid)}*/ src={require('../images/whitestar.png')} alt="" style={{width:"20px",height:"20px"}}/>           
+            return <img onClick={()=>this.props.dostar(file,this.state.userid,this.state.currentfolderid)} src={require('../images/whitestar.png')} alt="" style={{width:"20px",height:"20px"}}/>           
             
         }
     }
@@ -210,7 +210,7 @@ class Home extends Component {
             <td style={{width:"50%"}}>
             <img src={require('../images/file.png')} alt="" style={{width:"50px",height:"50px"}}/>    
             <a  href={"http://localhost:8080/"+file.virtualname} target="_blank">{file.originalname}</a>
-            {this.star(file.star,file._id)}
+            {this.star(file)}
             </td>
             <td>
             <p>{(file.date).substring(0,25)}</p>    
@@ -262,7 +262,7 @@ class Home extends Component {
             
             <img src={this.image} alt="" style={{width:"50px",height:"50px"}}/>        
             <button className="btn btn-link"  onClick={()=>this.getData(file,"add")}>{file.originalname}</button> 
-            {this.star(file.star,file._id)}
+            {this.star(file)}
             </td>
             <td>
             <p>{(file.date).substring(0,25)}</p>    
@@ -437,10 +437,12 @@ class Home extends Component {
                     {this.state.sharemembers.map(function(member,i){
                         return(<div>
                             <p className="alert alert-warning" >{member.firstname + " "+ member.lastname}
-                            <button className="btn btn-link" data-dismiss="modal" ><i className="fa fa-trash fa-2x"></i></button>
+                            <button className="btn btn-link" data-dismiss="modal" 
+                            onClick={()=>this.props.deleteMember(this.state.sharedcontentid.contentid,member.id,this.state.userid,this.state.currentfolderid)}
+                            ><i className="fa fa-trash fa-2x"></i></button>
                             </p>
                         </div> )   
-                    })}
+                    },this)}
                     </div>
 
                     <div className="modal-footer">
@@ -489,7 +491,7 @@ class Home extends Component {
                     {this.state.sharemembers.map(function(member,i){
                         return(<div>
                             <p className="alert alert-warning" >{member.firstname + " "+ member.lastname}
-                            <button className="btn btn-link" onClick={()=>this.props.deleteMember(this.state.sharedcontentid.contentid,member.id)}
+                            <button className="btn btn-link" onClick={()=>this.props.deleteMember(this.state.sharedcontentid.contentid,member.id,this.state.userid,this.state.currentfolderid)}
                             data-dismiss="modal" ><i className="fa fa-trash fa-2x"></i></button>
                             </p>
                         </div> )   

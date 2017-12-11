@@ -20,4 +20,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> findUsersByFirstnameStartsWith(String keyword);
 
     List<User> findUsersByIdIn(List<Integer> userid);
+
+
 }

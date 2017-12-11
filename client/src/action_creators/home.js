@@ -160,20 +160,22 @@ export function deleteContent(content,userid,parentfolderid){
 
  
 
-  export function dostar(contentid,value,curentfolderid,userid){
+  export function dostar(file,userid,parentfolderid){
     
     return  dispatch => {
        
-        axios.post(URL+"star", {"contentid":contentid,"value":value})
+        axios.post(URL+"content/dostar", file)
           .then(function (response) {
             dispatch({ type : "STAR_RESULT", payload : response.data } )
-            axios.post(URL+"content/load", {"userid":userid,"parentfolderid":curentfolderid}).then((response)=>{
-              return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
-         
-                }).catch(function (error) {
-                    return dispatch({ type : "HOME_ERROR", payload : error } )
-                });
-          })
+            axios.post(URL+"content/load", {"userid":userid,"contentid":parentfolderid})
+            .then((response)=>{
+             return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
+        
+               }).catch(function (error) {
+                   return dispatch({ type : "HOME_ERROR", payload : error } )
+               });
+ 
+                })
           .catch(function (error) {
             return dispatch({ type : "HOME_ERROR", payload : error } )
           });
@@ -182,15 +184,22 @@ export function deleteContent(content,userid,parentfolderid){
     
   }
 
-  export function deleteMember(contentid,userid){
-    console.log(contentid)
-    console.log(userid)
+  export function deleteMember(contentid,muserid, userid, parentfolderid){
+  
      return  dispatch => {
       
-         axios.post(URL+"content/removemember", {"data1":contentid,"data2":userid})
+         axios.post(URL+"content/removemember", {"data1":contentid,"data2":muserid})
            .then(function (response) {
               dispatch({ type : "DELETE_RESULT", payload : response.data } )
-                  
+             
+              axios.post(URL+"content/load", {"userid":userid,"contentid":parentfolderid})
+              .then((response)=>{
+               return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
+          
+                 }).catch(function (error) {
+                     return dispatch({ type : "HOME_ERROR", payload : error } )
+                 });
+   
                   }).catch(function (error) {
                      return dispatch({ type : "HOME_ERROR", payload : error } )
                    });
