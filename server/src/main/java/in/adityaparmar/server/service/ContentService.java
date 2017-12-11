@@ -3,6 +3,7 @@ package in.adityaparmar.server.service;
 import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.Mapping;
 import in.adityaparmar.server.entity.User;
+import in.adityaparmar.server.entity.request.Delete;
 import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.request.Share;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
@@ -297,6 +298,42 @@ public class ContentService {
 
         return response;
     }
+
+    public Response DeleteFile(Delete data){
+
+
+
+        Response response = new Response();
+
+
+        try{
+
+           if(data.getContent().getUserid() == data.getUserid()){
+               contentRepository.deleteByContentid(data.getContent().getContentid());
+               response.setStatus("Success");
+               response.setMsg(data.getContent().getOriginalname()+" "+data.getContent().getType()+" is successfully deleted.");
+           }
+           else{
+               response.setStatus("error");
+               response.setMsg("You are not authorize to perform this operation.");
+           }
+
+
+
+
+        }
+        catch (Exception e){
+
+            response.setStatus("error");
+            response.setMsg("Error in Deleting, Please Try Again.");
+
+        }
+
+
+        return response;
+    }
+
+
     public List<User> Members(int id){
 
 
@@ -310,4 +347,6 @@ public class ContentService {
         return user;
 
     }
+
+
 }

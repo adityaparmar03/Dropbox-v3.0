@@ -227,8 +227,7 @@ class Home extends Component {
                 <li role="presentation">
                 <a href={"http://localhost:8080/"+file.virtualname} download>Download</a></li>
                 <li><a data-toggle="modal" data-target="#fileModal" onClick={()=>this.share(file)}>Share</a></li>
-                <li><a onClick={()=>this.props.deleteContent(this.state.currentfolderid,
-                    file,this.state.userid )}>Delete</a></li>
+                <li><a onClick={()=>this.props.deleteContent(file,this.state.userid,this.state.currentfolderid )}>Delete</a></li>
             </ul>
             </td>     
             </tr>
@@ -278,8 +277,7 @@ class Home extends Component {
             <ul className="dropdown-menu" role="menu" aria-labelledby="menu1">
                 
                 <li><a data-toggle="modal" data-target="#folderModal" onClick={()=>this.share(file)}>Share</a></li>
-                <li><a onClick={()=>this.props.deleteContent(this.state.currentfolderid,
-                    file,this.state.userid )}>Delete</a></li>
+                <li><a onClick={()=>this.props.deleteContent(file,this.state.userid,this.state.currentfolderid )}>Delete</a></li>
             
          
             </ul>
@@ -439,14 +437,14 @@ class Home extends Component {
                     {this.state.sharemembers.map(function(member,i){
                         return(<div>
                             <p className="alert alert-warning" >{member.firstname + " "+ member.lastname}
-                            <button className="btn btn-link"><i className="fa fa-trash fa-2x"></i></button>
+                            <button className="btn btn-link" data-dismiss="modal" ><i className="fa fa-trash fa-2x"></i></button>
                             </p>
                         </div> )   
                     })}
                     </div>
 
                     <div className="modal-footer">
-                    <button className="btn btn-primary"
+                    <button className="btn btn-primary" data-dismiss="modal"
                     onClick={()=>this.props.share(this.state.shareUser,
                         this.state.userid,this.state.sharedcontentid,
                         this.state.currentfolderid)}>Share</button>    

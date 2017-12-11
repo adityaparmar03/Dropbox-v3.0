@@ -4,6 +4,7 @@ package in.adityaparmar.server.controller;
 import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.Mapping;
 import in.adityaparmar.server.entity.User;
+import in.adityaparmar.server.entity.request.Delete;
 import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.request.General;
 import in.adityaparmar.server.entity.request.Share;
@@ -111,6 +112,12 @@ public class ContentController  {
         return mappingService.RemoveMember(Integer.parseInt(general.getData1()),Integer.parseInt(general.getData2()));
     }
 
+    @RequestMapping(path="/delete",method = RequestMethod.POST)
+    public Response DeleteFile(@RequestBody Delete data) {
+        // This returns a JSON with the users
+
+        return contentService.DeleteFile(data);
+    }
 
 
 }

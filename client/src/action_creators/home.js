@@ -107,8 +107,7 @@ export function LOADFOLDER(userid,parentfolderid){
 export function share(users,userid,contentid,parentfolderid){
   console.log("contentid"+contentid);
   return  dispatch => {
-      console.log(users)
-      console.log(contentid)
+     
 
       axios.post(URL+"content/share", {"users":users,"content":contentid})
         .then(function (response) {
@@ -131,20 +130,23 @@ export function share(users,userid,contentid,parentfolderid){
    }
   
 }
-export function deleteContent(parentfolderid,file,userid){
+export function deleteContent(content,userid,parentfolderid){
   
     return  dispatch => {
      
-        axios.post(URL+"delete", {"userid":userid,"file":file,"parentfolderid":parentfolderid})
+        axios.post(URL+"content/delete", {content,userid})
           .then(function (response) {
              dispatch({ type : "DELETE_RESULT", payload : response.data } )
                  
-             axios.post(URL+"content/load", {"userid":userid,"parentfolderid":parentfolderid}).then((response)=>{
-              return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
-         
-                }).catch(function (error) {
-                    return dispatch({ type : "HOME_ERROR", payload : error } )
-                });
+             axios.post(URL+"content/load", {"userid":userid,"contentid":parentfolderid})
+             .then((response)=>{
+             
+               return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
+              
+             }).catch(function (error) {
+             return dispatch({ type : "HOME_ERROR", payload : error } )
+             });
+        
   
                 }).catch(function (error) {
                     return dispatch({ type : "HOME_ERROR", payload : error } )
