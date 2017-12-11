@@ -11,13 +11,13 @@ export function INIT(callback,user){
 
                 dispatch({ type : "HOME_RESULT", payload : response.data } )
                
-                axios.post(URL+"folder/root",user)
+                axios.post(URL+"content/root",user)
                 .then(function (response) {
   
                   var rootid = response.data.rootid
                   dispatch({ type : "ROOT_RESULT", payload : response.data } )
                   
-                  axios.post(URL+"folder/load", {"userid":user.id,"contentid":rootid})
+                  axios.post(URL+"content/load", {"userid":user.id,"contentid":rootid})
                   .then((response)=>{
                     callback(1)
                     return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
@@ -62,7 +62,7 @@ export function LOGOUT(){
 export function UploadFile(payload){
       return  dispatch => {
           
-          axios.post(URL+"folder/upload", payload)
+          axios.post(URL+"content/upload", payload)
             .then(function (response) {
               return dispatch({ type : "UPLOAD_RESULT", payload : response.data } )
             })
@@ -77,7 +77,7 @@ export function UploadFolder(parentfolderid,foldername,userid){
       if(foldername!=="")
       return  dispatch => {
          
-          axios.post(URL+"folder/createfolder", {"contentid":parentfolderid,"foldername":foldername,"userid":userid})
+          axios.post(URL+"content/createfolder", {"contentid":parentfolderid,"foldername":foldername,"userid":userid})
             .then(function (response) {
               return dispatch({ type : "CREARE_FOLDER_RESULT", payload : response.data } )
             })
@@ -94,7 +94,7 @@ export function UploadFolder(parentfolderid,foldername,userid){
 export function LOADFOLDER(userid,parentfolderid){
   return (dispatch) => {
    
-    axios.post(URL+"folder/load", {"userid":userid,"contentid":parentfolderid})
+    axios.post(URL+"content/load", {"userid":userid,"contentid":parentfolderid})
     .then((response)=>{
      
       return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
@@ -107,12 +107,15 @@ export function LOADFOLDER(userid,parentfolderid){
 export function share(users,userid,contentid,parentfolderid){
   console.log("contentid"+contentid);
   return  dispatch => {
-   
-      axios.post(URL+"share", {"users":users,"userid":userid,"contentid":contentid})
+      console.log(users)
+      console.log(contentid)
+
+      axios.post(URL+"content/share", {"users":users,"content":contentid})
         .then(function (response) {
            dispatch({ type : "SHARE_RESULT", payload : response.data } )
           
-           axios.post(URL+"folder/load", {"userid":userid,"parentfolderid":parentfolderid}).then((response)=>{
+           axios.post(URL+"content/load", {"userid":userid,"contentid":parentfolderid})
+           .then((response)=>{
             return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
        
               }).catch(function (error) {
@@ -136,7 +139,7 @@ export function deleteContent(parentfolderid,file,userid){
           .then(function (response) {
              dispatch({ type : "DELETE_RESULT", payload : response.data } )
                  
-             axios.post(URL+"folder/load", {"userid":userid,"parentfolderid":parentfolderid}).then((response)=>{
+             axios.post(URL+"content/load", {"userid":userid,"parentfolderid":parentfolderid}).then((response)=>{
               return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
          
                 }).catch(function (error) {
@@ -159,7 +162,7 @@ export function deleteContent(parentfolderid,file,userid){
         axios.post(URL+"star", {"contentid":contentid,"value":value})
           .then(function (response) {
             dispatch({ type : "STAR_RESULT", payload : response.data } )
-            axios.post(URL+"folder/load", {"userid":userid,"parentfolderid":curentfolderid}).then((response)=>{
+            axios.post(URL+"content/load", {"userid":userid,"parentfolderid":curentfolderid}).then((response)=>{
               return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
          
                 }).catch(function (error) {

@@ -1,10 +1,12 @@
 package in.adityaparmar.server.entity;
 
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
 public class Content {
@@ -18,6 +20,7 @@ public class Content {
     private String type;
     private String star;
     private int userid;
+
 
     public Content() {
     }

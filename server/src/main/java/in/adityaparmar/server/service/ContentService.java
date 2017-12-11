@@ -4,6 +4,7 @@ import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.Mapping;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
+import in.adityaparmar.server.entity.request.Share;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.RootResponse;
@@ -59,7 +60,7 @@ public class ContentService {
 
             // Get content
 
-            List<Mapping> mapping = mappingRepository.findMappingByFolderidAndUserid(folder.getContentid(),folder.getUserid());
+            List<Mapping> mapping = mappingRepository.findMappingByFolderid(folder.getContentid());
 
             List<Integer> contentid = mapping.stream().map(mapping1 -> mapping1.getContentid()).collect(Collectors.toList());
 
@@ -114,7 +115,7 @@ public class ContentService {
             // Mapping End
 
 
-            List<Mapping> mapping2 = mappingRepository.findMappingByFolderidAndUserid(parentfolderid,userid);
+            List<Mapping> mapping2 = mappingRepository.findMappingByFolderid(parentfolderid);
 
             List<Integer> contentid = mapping2.stream().map(mapping1 -> mapping1.getContentid()).collect(Collectors.toList());
 
@@ -172,7 +173,7 @@ public class ContentService {
             // Mapping End
 
 
-            List<Mapping> mapping2 = mappingRepository.findMappingByFolderidAndUserid(folder.getContentid(),folder.getUserid());
+            List<Mapping> mapping2 = mappingRepository.findMappingByFolderid(folder.getContentid());
 
             List<Integer> contentid = mapping2.stream().map(mapping1 -> mapping1.getContentid()).collect(Collectors.toList());
 
@@ -198,4 +199,47 @@ public class ContentService {
         return contentLoadResponse;
     }
 
+    public Response Share(Share sharedata ){
+
+        Content content = sharedata.getContent();
+        List<User> users = sharedata.getUsers();
+
+        Response response = new Response();
+
+
+        try{
+
+
+            // End
+
+            // Mapping Start
+            for(User user : users){
+
+                Mapping mapping = new Mapping();
+                mapping.setContentid(content.getContentid());
+
+                Content rootdata =  contentRepository.findAllByUseridAndOriginalname(user.getId(),"root");
+                mapping.setFolderid(rootdata.getContentid());
+
+                mapping.setUserid(user.getId());
+                mappingRepository.save(mapping);
+
+                response.setStatus("success");
+                response.setMsg(content.getOriginalname()+" "+content.getType()+" Successfully Created.");
+            }
+
+
+
+
+        }
+        catch (Exception e){
+
+            response.setStatus("error");
+            response.setMsg("Error in Sharing, Please Try Again.");
+
+        }
+
+
+        return response;
+    }
 }

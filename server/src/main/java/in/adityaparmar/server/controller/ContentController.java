@@ -4,6 +4,7 @@ package in.adityaparmar.server.controller;
 import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
+import in.adityaparmar.server.entity.request.Share;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.RootResponse;
@@ -27,7 +28,7 @@ import java.util.List;
 
 @RestController    // This means that this class is a Controller
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping(path="/folder") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/content") // This means URL's start with /demo (after Application path)
 public class ContentController  {
 
     @Autowired
@@ -90,6 +91,12 @@ public class ContentController  {
         //return new ResponseEntity<com.cmpe273.dropbox.backend.entity.Files>(newFile, HttpStatus.OK);
     }
 
+
+    @RequestMapping(path="/share",method = RequestMethod.POST)
+    public Response Share(@RequestBody Share share) {
+        // This returns a JSON with the users
+        return contentService.Share(share);
+    }
 
 
 }

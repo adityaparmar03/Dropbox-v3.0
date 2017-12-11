@@ -29,6 +29,7 @@ class Home extends Component {
            currentfolderid:"",
            publicsharinglink:"",
            sharedcontentid:"",
+           sharedcontent:{},
            shareUser:[]
         }
      }
@@ -141,6 +142,7 @@ class Home extends Component {
         var link="http://localhost:9000/files/"+file.virtualname 
         this.setState({publicsharinglink:link})
         this.setState({sharedcontentid:file})
+        this.setState({sharedcontent:file})
  
  
      }
@@ -299,22 +301,23 @@ class Home extends Component {
     }
   
     onChange (value) {
-        console.log("value"+ value)
+        
 		this.setState({shareUser : value})
-        console.log(this.state.shareUser)
+      
     }
     getUsers (input) {
 		if (!input) {
+            console.log("i should not call "+input)
 			return Promise.resolve({ options: [] });
 		}
 
-		return fetch('http://localhost:9000/users', {
+		return fetch('http://localhost:8080/user/suggestions', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"index":input})})
+            body: JSON.stringify({"data1":input})})
             .then((response) => response.json())
 		    .then((json) => {
                 console.log("response"+JSON.stringify(json))
@@ -322,7 +325,7 @@ class Home extends Component {
 		    });
 	}
     displayUser(data,i){
-        return <p key={data._id} 
+        return <p key={data.id} 
         className="alert alert-info" >
          <strong>{data.firstname+" "+data.lastname}</strong>
           
@@ -413,7 +416,7 @@ class Home extends Component {
                         <AsyncComponent multi={true}
                         value={this.state.shareUser} 
                         onChange={this.onChange.bind(this)} 
-                        valueKey="_id" labelKey="all" 
+                        valueKey="id" labelKey="all" 
                         loadOptions={this.getUsers.bind(this)} 
                         backspaceRemoves={true}
                         placeholder="Email or Name " />
@@ -451,7 +454,7 @@ class Home extends Component {
                         <AsyncComponent multi={true}
                         value={this.state.shareUser} 
                         onChange={this.onChange.bind(this)} 
-                        valueKey="_id" labelKey="all"
+                        valueKey="id" labelKey="all"
                         loadOptions={this.getUsers.bind(this)} 
                         backspaceRemoves={true}
                         placeholder="Email or Name " />

@@ -5,9 +5,11 @@ import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.SignInResponse;
+import in.adityaparmar.server.entity.response.SuggestionResponse;
 import in.adityaparmar.server.repository.ContentRepository;
 import in.adityaparmar.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -152,6 +154,22 @@ public class UserService {
 
         }
         return signInResponse;
+    }
+
+    public SuggestionResponse AllUsers(String keyword){
+        SuggestionResponse suggestionResponse = new SuggestionResponse();
+
+        try{
+
+          List<User> user = userRepository.findUsersByEmailStartsWith(keyword);
+          user.addAll(userRepository.findUsersByFirstnameStartsWith(keyword));
+          suggestionResponse.setUsers(user);
+
+        }
+        catch (Exception e){
+            suggestionResponse.setUsers(null);
+        }
+        return suggestionResponse;
     }
 
 }

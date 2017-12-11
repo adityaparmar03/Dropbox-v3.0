@@ -5,14 +5,17 @@ package in.adityaparmar.server.controller;
 
 
 import in.adityaparmar.server.entity.User;
+import in.adityaparmar.server.entity.request.General;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.SignInResponse;
+import in.adityaparmar.server.entity.response.SuggestionResponse;
 import in.adityaparmar.server.service.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.MediaType;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +61,16 @@ public class UserController {
         return userService.Update(user);
 
     }
+
+    @RequestMapping(path="/suggestions",method = RequestMethod.POST) // Map ONLY POST Requests
+    public SuggestionResponse AllUsers (@RequestBody General general) {
+
+
+        return userService.AllUsers(general.getData1());
+
+    }
+
+
 
 
 

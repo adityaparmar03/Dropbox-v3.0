@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface MappingRepository  extends CrudRepository<Mapping,Integer> {
 
-        List<Mapping> findMappingByFolderidAndUserid(int folderid, int userid);
+        List<Mapping> findMappingByFolderid(int folderid);
 }
