@@ -42,7 +42,12 @@ class SignIn extends Component {
         })
       }
     componentDidMount() {
-        this.props.INIT()
+       //this.props.INIT()
+
+       var id = localStorage.id;
+       if(id>0){
+           this.props.history.push('/home');
+       }
        
     }
     

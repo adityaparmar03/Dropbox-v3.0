@@ -14,6 +14,10 @@ public class ServerApplication {
 
 	@Bean
 	WebMvcConfigurer configurer () {
+
+		String UPLOADED_FOLDER = System.getProperty("user.dir")+ "/src/main/resources/static/";
+		String Classpath = "classpath:"+UPLOADED_FOLDER;
+
 		return new WebMvcConfigurerAdapter() {
 			@Override
 			public void addResourceHandlers (ResourceHandlerRegistry registry) {

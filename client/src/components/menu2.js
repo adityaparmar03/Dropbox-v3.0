@@ -6,8 +6,17 @@ import { withRouter } from 'react-router-dom'
 import  '../css/vericalmenu.css'
 
 
+
 class Menu2 extends Component {
-  
+ 
+    handlelogout(){
+        var id = localStorage.id;
+        if(id>0){
+            localStorage.setItem(id,0);
+            localStorage.id =0;
+            this.props.history.push('/signin');
+        }
+    }
     
     render() {
         return (
@@ -22,7 +31,7 @@ class Menu2 extends Component {
                     <li><a href="/profile">Profile</a></li>
                     <li><a href="/activitylog">Activity Log</a></li>
                     <li className="divider"></li>
-                    <li onClick={()=>this.props.LOGOUT()}><a href="">Sign out</a></li>
+                    <li onClick={()=>this.handlelogout()}><a href="">Sign out</a></li>
                     </ul>
             </div>
                 

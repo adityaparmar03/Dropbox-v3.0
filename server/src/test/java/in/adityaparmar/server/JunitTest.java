@@ -1,6 +1,5 @@
 package in.adityaparmar.server;
 
-import in.adityaparmar.server.entity.Activity;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
@@ -12,20 +11,10 @@ import in.adityaparmar.server.service.MappingService;
 import in.adityaparmar.server.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.List;
-
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.assertj.core.api.Assertions.assertThat;
 
 

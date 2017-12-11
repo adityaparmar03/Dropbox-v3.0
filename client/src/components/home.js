@@ -58,8 +58,11 @@ class Home extends Component {
       }
      // On Load 
     componentDidMount() {
+        if(localStorage.id == 0){
+            this.props.history.push('/signin');
+        }
         if(typeof(Storage) !== "undefined") {
-            
+           
                 if (localStorage.id) {
                  
                     if(this.state.currentfolderid === "")
@@ -97,6 +100,7 @@ class Home extends Component {
                 
                 
                 } 
+                
         }
        
 
@@ -140,7 +144,7 @@ class Home extends Component {
     }
     share(file){
 
-        var link="http://localhost:9000/files/"+file.virtualname 
+        var link="http://localhost:8080/"+file.virtualname 
         this.setState({publicsharinglink:link})
         this.setState({sharedcontentid:file})
         this.setState({sharedcontent:file})
@@ -213,7 +217,7 @@ class Home extends Component {
             {this.star(file)}
             </td>
             <td>
-            <p>{(file.date).substring(0,25)}</p>    
+            <p>{(file.date).substring(0,32)}</p>    
             </td>
             <td>
             <p><a data-tip={this.members.toString().replace(/,/g, "")} data-html={true}>{this.sharemsg}</a></p>   
@@ -265,7 +269,7 @@ class Home extends Component {
             {this.star(file)}
             </td>
             <td>
-            <p>{(file.date).substring(0,25)}</p>    
+            <p>{(file.date).substring(0,32)}</p>    
             </td>
             <td>  
             <p><a data-tip={this.members.toString().replace(/,/g, "")} data-html={true}>{this.sharemsg}</a></p>   

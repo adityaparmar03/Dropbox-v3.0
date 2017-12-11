@@ -44,18 +44,21 @@ export function INIT(callback,user){
 }
 export function LOGOUT(){
   return  dispatch => {
-      
-      axios.get(URL+"logout",{withCredentials: true})
+  
+}
+ // return  dispatch => {
+    
+      /*axios.get(URL+"logout",{withCredentials: true})
         .then(function (response) {
          
-          return dispatch({ type : "LOGOUT", payload : response.data } )
+        
          
         })
         .catch(function (error) {
           return dispatch({ type : "HOME_ERROR", payload : error } )
         });
        
-   }
+   }*/
 }
 
 

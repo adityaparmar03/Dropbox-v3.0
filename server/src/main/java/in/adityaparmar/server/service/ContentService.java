@@ -272,10 +272,6 @@ public class ContentService {
 
         try{
 
-
-            // End
-
-            // Mapping Start
             for(User user : users){
 
                 Mapping mapping = new Mapping();
@@ -326,7 +322,7 @@ public class ContentService {
            }
            else{
                response.setStatus("error");
-               response.setMsg("You are not authorize to perform this operation.");
+               response.setMsg("You are not authorize to perform this Task.");
            }
 
 
