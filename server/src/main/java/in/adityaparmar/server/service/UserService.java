@@ -1,11 +1,13 @@
 package in.adityaparmar.server.service;
 
 
+import in.adityaparmar.server.entity.Activity;
 import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.SignInResponse;
 import in.adityaparmar.server.entity.response.SuggestionResponse;
+import in.adityaparmar.server.repository.ActivityRepository;
 import in.adityaparmar.server.repository.ContentRepository;
 import in.adityaparmar.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private ContentRepository contentRepository;
+    @Autowired
+    private ActivityRepository activityRepository;
 
     Response response = new Response();
     SignInResponse signInResponse = new SignInResponse();
@@ -161,9 +165,9 @@ public class UserService {
 
         try{
 
-          List<User> user = userRepository.findUsersByEmailStartsWith(keyword);
-          user.addAll(userRepository.findUsersByFirstnameStartsWith(keyword));
-          suggestionResponse.setUsers(user);
+            List<User> user = userRepository.findUsersByEmailStartsWith(keyword);
+            user.addAll(userRepository.findUsersByFirstnameStartsWith(keyword));
+            suggestionResponse.setUsers(user);
 
         }
         catch (Exception e){
@@ -171,5 +175,13 @@ public class UserService {
         }
         return suggestionResponse;
     }
+
+    public List<Activity> Activities(User user){
+
+        System.out.println(user.getId());
+        return activityRepository.findAllByUserid(user.getId());
+    }
+
+
 
 }

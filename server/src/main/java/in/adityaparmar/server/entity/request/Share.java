@@ -9,6 +9,7 @@ public class Share {
 
     private Content content;
     private List<User> users;
+    private int userid;
 
     public Content getContent() {
         return content;
@@ -24,5 +25,13 @@ public class Share {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 }

@@ -1,6 +1,7 @@
 package in.adityaparmar.server.controller;
 
 
+import in.adityaparmar.server.entity.Activity;
 import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.Mapping;
 import in.adityaparmar.server.entity.User;
@@ -40,6 +41,7 @@ public class ContentController  {
 
     @Autowired
     private MappingService mappingService;
+
 
     private static String UPLOADED_FOLDER = System.getProperty("user.dir")+ "/src/main/resources/static/";
 

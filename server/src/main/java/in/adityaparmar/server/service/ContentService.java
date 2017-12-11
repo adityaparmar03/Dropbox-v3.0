@@ -1,5 +1,6 @@
 package in.adityaparmar.server.service;
 
+import in.adityaparmar.server.entity.Activity;
 import in.adityaparmar.server.entity.Content;
 import in.adityaparmar.server.entity.Mapping;
 import in.adityaparmar.server.entity.User;
@@ -10,6 +11,7 @@ import in.adityaparmar.server.entity.response.ContentLoadResponse;
 import in.adityaparmar.server.entity.response.Contents;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.RootResponse;
+import in.adityaparmar.server.repository.ActivityRepository;
 import in.adityaparmar.server.repository.ContentRepository;
 import in.adityaparmar.server.repository.MappingRepository;
 import in.adityaparmar.server.repository.UserRepository;
@@ -31,6 +33,8 @@ public class ContentService {
     private MappingRepository mappingRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ActivityRepository activityRepository;
 
     public RootResponse getRoot(User user){
 
@@ -160,11 +164,15 @@ public class ContentService {
 
             }
             contentLoadResponse.setContents(mixture);
-
+            String msg = name +" File Successfully uploaded.";
             response.setStatus("success");
-            response.setMsg("File Successfully uploaded.");
+            response.setMsg(msg);
             contentLoadResponse.setResponse(response);
             contentLoadResponse.setParentfolderid(parentfolderid);
+
+
+            activityRepository.save(new Activity(msg,date.toString(),userid));
+
 
         }
         catch (Exception e){
@@ -235,11 +243,13 @@ public class ContentService {
 
             }
             contentLoadResponse.setContents(mixture);
-
+            String msg = folder.getFoldername()+" Folder Successfully Created.";
             response.setStatus("success");
             response.setMsg("Folder Successfully Created.");
             contentLoadResponse.setResponse(response);
             contentLoadResponse.setParentfolderid(folder.getContentid());
+
+            activityRepository.save(new Activity(msg,date.toString(),folder.getUserid()));
 
         }
         catch (Exception e){
@@ -281,7 +291,9 @@ public class ContentService {
                 mappingRepository.save(mapping);
 
                 response.setStatus("success");
-                response.setMsg(content.getOriginalname()+" "+content.getType()+" Successfully Created.");
+                String msg = content.getOriginalname()+" "+content.getType()+" Successfully shared with "+user.getFirstname()+" "+user.getLastname();
+                response.setMsg(msg);
+                activityRepository.save(new Activity(msg,new Date().toString(),sharedata.getUserid()));
             }
 
 
@@ -311,7 +323,9 @@ public class ContentService {
            if(data.getContent().getUserid() == data.getUserid()){
                contentRepository.deleteByContentid(data.getContent().getContentid());
                response.setStatus("Success");
-               response.setMsg(data.getContent().getOriginalname()+" "+data.getContent().getType()+" is successfully deleted.");
+               String msg = data.getContent().getOriginalname()+" "+data.getContent().getType()+" is successfully deleted.";
+               response.setMsg(msg);
+               activityRepository.save(new Activity(msg,new Date().toString(),data.getUserid()));
            }
            else{
                response.setStatus("error");

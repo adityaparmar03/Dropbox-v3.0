@@ -4,6 +4,7 @@ package in.adityaparmar.server.controller;
 
 
 
+import in.adityaparmar.server.entity.Activity;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.General;
 import in.adityaparmar.server.entity.response.Response;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController   // This means that this class is a Controller
@@ -67,6 +69,14 @@ public class UserController {
 
 
         return userService.AllUsers(general.getData1());
+
+    }
+
+    @RequestMapping(path="/activities",method = RequestMethod.POST) // Map ONLY POST Requests
+    public List<Activity> AllUsers (@RequestBody User user) {
+
+
+        return userService.Activities(user);
 
     }
 

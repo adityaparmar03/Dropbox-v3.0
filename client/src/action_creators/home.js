@@ -109,7 +109,7 @@ export function share(users,userid,contentid,parentfolderid){
   return  dispatch => {
      
 
-      axios.post(URL+"content/share", {"users":users,"content":contentid})
+      axios.post(URL+"content/share", {"users":users,"content":contentid,userid})
         .then(function (response) {
            dispatch({ type : "SHARE_RESULT", payload : response.data } )
           

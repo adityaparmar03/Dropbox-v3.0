@@ -9,7 +9,7 @@ export default function(state=activity_initialstate,action){
     if(action.type === "ACTIVITYLOG_RESULT"){
         return{
             ...state,
-            activity:action.payload.activities,  
+            activity:action.payload,  
             status:action.payload.status,
             msg:action.payload.msg
                  

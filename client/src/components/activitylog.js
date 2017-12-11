@@ -32,7 +32,7 @@ class Activitylog extends Component {
     componentDidMount() {
         
 
-         this.props.INIT();
+         this.props.INIT({id:localStorage.id});
                              
         
       }
@@ -42,10 +42,10 @@ class Activitylog extends Component {
         return (<tr key={i}>
                     
                     <td style={{width:"50%"}}>
-                        {activity.activity}
+                        {activity.msg}
                     </td>   
                     <td>
-                        {activity.date.substring(0,25)}
+                        {activity.date.substring(0,32)}
                     </td>  
                 </tr>
             )
