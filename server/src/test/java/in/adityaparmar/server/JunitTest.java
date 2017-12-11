@@ -3,10 +3,12 @@ package in.adityaparmar.server;
 import in.adityaparmar.server.entity.Activity;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
+import in.adityaparmar.server.entity.response.ContentLoadResponse;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.SignInResponse;
 import in.adityaparmar.server.repository.UserRepository;
 import in.adityaparmar.server.service.ContentService;
+import in.adityaparmar.server.service.MappingService;
 import in.adityaparmar.server.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +43,9 @@ public class JunitTest extends ServerApplicationTests {
 
     @Autowired
     private ContentService contentService;
+
+    @Autowired
+    private MappingService mappingService;
 
 
     @Before
@@ -85,7 +90,7 @@ public class JunitTest extends ServerApplicationTests {
         User mockuser = new User();
         mockuser.setFirstname("Raj");
         mockuser.setLastname("Par");
-        mockuser.setEmail("raj@gmail.com");
+        mockuser.setEmail("rajpatel@gmail.com");
         mockuser.setPassword("1234");
 
 
@@ -136,11 +141,76 @@ public class JunitTest extends ServerApplicationTests {
         folder.setUserid(1);
         folder.setFoldername("Adi");
 
-        SignInResponse response = contentService.
+        ContentLoadResponse response = contentService.CreateFolder(folder);
 
         assertThat(response.getResponse().getStatus()).isEqualTo("success");
 
 
     }
+
+    @Test
+    public void UpdateProfile() throws Exception {
+
+        User mockuser = new User();
+        mockuser.setId(5);
+        mockuser.setFirstname("Raj");
+        mockuser.setLastname("Par");
+        mockuser.setEmail("raj@gmail.com");
+        mockuser.setPassword("1234");
+        mockuser.setInterests("cricket");
+        mockuser.setAboutme("coder");
+
+        SignInResponse response = userService.Update(mockuser);
+
+        assertThat(response.getResponse().getStatus()).isEqualTo("success");
+
+
+    }
+
+    @Test
+    public void UploadFile() throws Exception {
+
+
+
+        ContentLoadResponse response = contentService.UploadFile("dropbox.zip","Mon Dec 11 02:26:13 PST 2017_dropbox.zip",1,1);
+
+        assertThat(response.getResponse().getStatus()).isEqualTo("success");
+
+
+    }
+
+    @Test
+    public void LoadFolder() throws Exception {
+
+
+        Folder folder = new Folder();
+        folder.setContentid(1);
+        folder.setUserid(1);
+        folder.setFoldername("Adi");
+
+        ContentLoadResponse response = contentService.getFolderData(folder);
+
+        assertThat(response.getResponse().getStatus()).isEqualTo("success");
+
+
+    }
+
+    @Test
+    public void LeaveGroup() throws Exception {
+
+
+        Folder folder = new Folder();
+        folder.setContentid(1);
+        folder.setUserid(1);
+        folder.setFoldername("Adi");
+
+        Response response = mappingService.RemoveMember(1,1);
+
+        assertThat(response.getStatus()).isEqualTo("success");
+
+
+    }
+
+
 
 }
