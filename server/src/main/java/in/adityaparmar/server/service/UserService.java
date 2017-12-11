@@ -133,6 +133,25 @@ public class UserService {
         }
     }
 
+    public SignInResponse Update(User data){
 
+        try{
+            User users = userRepository.save(data);
+            response.setStatus("success");
+            response.setMsg("Profile has updated successfully.");
+            signInResponse.setUsers(users);
+            signInResponse.setResponse(response);
+
+
+        }
+        catch (Exception e){
+            response.setStatus("error");
+            response.setMsg("Something went wrong, Try Again.");
+            signInResponse.setUsers(data);
+            signInResponse.setResponse(response);
+
+        }
+        return signInResponse;
+    }
 
 }

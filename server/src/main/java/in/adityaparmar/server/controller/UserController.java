@@ -51,6 +51,14 @@ public class UserController {
 
     }
 
+    @RequestMapping(path="/update",method = RequestMethod.POST) // Map ONLY POST Requests
+    public SignInResponse Update (@RequestBody User user) {
+
+
+        return userService.Update(user);
+
+    }
+
 
 
 

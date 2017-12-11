@@ -14,15 +14,15 @@ export default function(state=profile_initialstate,action){
     if(action.type === "PROFILE_RESULT"){
         return{
             ...state,
-            status:action.payload.status,
-            msg:action.payload.msg,
-            firstname:action.payload.user.firstname,
-            lastname:action.payload.user.lastname,
-            email:action.payload.user.email,
-            password:action.payload.user.password,
-            aboutme:action.payload.user.aboutme,
-            interests:action.payload.user.interests,
-            userid:action.payload.user._id,
+            status:action.payload.response.status,
+            msg:action.payload.response.msg,
+            firstname:action.payload.users.firstname,
+            lastname:action.payload.users.lastname,
+            email:action.payload.users.email,
+            password:action.payload.users.password,
+            aboutme:action.payload.users.aboutme,
+            interests:action.payload.users.interests,
+            userid:action.payload.users.id,
                 
         }
     }

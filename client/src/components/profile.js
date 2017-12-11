@@ -93,7 +93,7 @@ class Profile extends Component {
     componentDidMount() {
        
 
-          this.props.INIT();
+          this.props.INIT({id:localStorage.id});
                              
         
     }
