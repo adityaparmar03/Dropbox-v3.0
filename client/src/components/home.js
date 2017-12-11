@@ -171,8 +171,8 @@ class Home extends Component {
     }
 
     getData(folder,type){
-        window.history.pushState({data:folder._id},"",'/home/'+folder.originalname)
-        this.props.LOADFOLDER(this.state.userid,folder._id)
+        window.history.pushState({data:folder.contentid},"",'/home/'+folder.originalname)
+        this.props.LOADFOLDER(this.state.userid,folder.contentid)
     }
     display(file,i){
       

@@ -94,13 +94,14 @@ export function UploadFolder(parentfolderid,foldername,userid){
 export function LOADFOLDER(userid,parentfolderid){
   return (dispatch) => {
    
-    axios.post(URL+"folder/load", {"userid":userid,"parentfolderid":parentfolderid}).then((response)=>{
-              return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
-         
-        }).catch(function (error) {
-            return dispatch({ type : "HOME_ERROR", payload : error } )
-          });
-       
+    axios.post(URL+"folder/load", {"userid":userid,"contentid":parentfolderid})
+    .then((response)=>{
+     
+      return dispatch({ type : "FOLDER_RESULT", payload : response.data } )
+     
+    }).catch(function (error) {
+    return dispatch({ type : "HOME_ERROR", payload : error } )
+    });
   }
 }
 export function share(users,userid,contentid,parentfolderid){
