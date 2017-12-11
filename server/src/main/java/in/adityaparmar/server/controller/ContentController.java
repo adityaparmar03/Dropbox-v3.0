@@ -2,13 +2,16 @@ package in.adityaparmar.server.controller;
 
 
 import in.adityaparmar.server.entity.Content;
+import in.adityaparmar.server.entity.Mapping;
 import in.adityaparmar.server.entity.User;
 import in.adityaparmar.server.entity.request.Folder;
+import in.adityaparmar.server.entity.request.General;
 import in.adityaparmar.server.entity.request.Share;
 import in.adityaparmar.server.entity.response.ContentLoadResponse;
 import in.adityaparmar.server.entity.response.Response;
 import in.adityaparmar.server.entity.response.RootResponse;
 import in.adityaparmar.server.service.ContentService;
+import in.adityaparmar.server.service.MappingService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,6 +36,9 @@ public class ContentController  {
 
     @Autowired
     private ContentService contentService;
+
+    @Autowired
+    private MappingService mappingService;
 
     private static String UPLOADED_FOLDER = System.getProperty("user.dir")+ "/src/main/resources/static/";
 
@@ -97,6 +103,14 @@ public class ContentController  {
         // This returns a JSON with the users
         return contentService.Share(share);
     }
+
+    @RequestMapping(path="/removemember",method = RequestMethod.POST)
+    public Response RemoveMember(@RequestBody General general) {
+        // This returns a JSON with the users
+
+        return mappingService.RemoveMember(Integer.parseInt(general.getData1()),Integer.parseInt(general.getData2()));
+    }
+
 
 
 }

@@ -29,8 +29,9 @@ class Home extends Component {
            currentfolderid:"",
            publicsharinglink:"",
            sharedcontentid:"",
-           sharedcontent:{},
-           shareUser:[]
+           sharedcontent:{members:[]},
+           shareUser:[],
+           sharemembers:[]
         }
      }
      // ......Error Display .....
@@ -143,6 +144,7 @@ class Home extends Component {
         this.setState({publicsharinglink:link})
         this.setState({sharedcontentid:file})
         this.setState({sharedcontent:file})
+        this.setState({sharemembers:file.members})
  
  
      }
@@ -332,6 +334,8 @@ class Home extends Component {
 
         </p>
     }
+
+  
    
     render() {
         const AsyncComponent = Select.Async
@@ -429,6 +433,18 @@ class Home extends Component {
                         </div>
                     </div>
                     </div>
+                    <hr/>
+                    <div style={{padding:'2%'}}>
+                    <h4> Members </h4>
+                    {this.state.sharemembers.map(function(member,i){
+                        return(<div>
+                            <p className="alert alert-warning" >{member.firstname + " "+ member.lastname}
+                            <button className="btn btn-link"><i className="fa fa-trash fa-2x"></i></button>
+                            </p>
+                        </div> )   
+                    })}
+                    </div>
+
                     <div className="modal-footer">
                     <button className="btn btn-primary"
                     onClick={()=>this.props.share(this.state.shareUser,
@@ -469,11 +485,22 @@ class Home extends Component {
                     
                      </div>
                   
-                   
-                    
+                     <hr/>
+                    <div style={{padding:'2%'}}>
+                    <h4> Members </h4>
+                    {this.state.sharemembers.map(function(member,i){
+                        return(<div>
+                            <p className="alert alert-warning" >{member.firstname + " "+ member.lastname}
+                            <button className="btn btn-link" onClick={()=>this.props.deleteMember(this.state.sharedcontentid.contentid,member.id)}
+                            data-dismiss="modal" ><i className="fa fa-trash fa-2x"></i></button>
+                            </p>
+                        </div> )   
+                    },this)}
+                    </div>
+                  
                    
                     <div className="modal-footer">
-                    <button className="btn btn-primary"
+                    <button className="btn btn-primary" data-dismiss="modal"
                     onClick={()=>this.props.share(this.state.shareUser,
                         this.state.userid,
                         this.state.sharedcontentid,

@@ -155,6 +155,9 @@ export function deleteContent(parentfolderid,file,userid){
      }
     
   }
+
+ 
+
   export function dostar(contentid,value,curentfolderid,userid){
     
     return  dispatch => {
@@ -176,3 +179,22 @@ export function deleteContent(parentfolderid,file,userid){
      }
     
   }
+
+  export function deleteMember(contentid,userid){
+    console.log(contentid)
+    console.log(userid)
+     return  dispatch => {
+      
+         axios.post(URL+"content/removemember", {"data1":contentid,"data2":userid})
+           .then(function (response) {
+              dispatch({ type : "DELETE_RESULT", payload : response.data } )
+                  
+                  }).catch(function (error) {
+                     return dispatch({ type : "HOME_ERROR", payload : error } )
+                   });
+        
+         
+          
+      }
+     
+   }
