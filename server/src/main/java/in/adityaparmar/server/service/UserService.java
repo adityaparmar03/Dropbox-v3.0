@@ -107,6 +107,7 @@ public class UserService {
             User users = userRepository.findUserByEmail(data.getEmail());
             data.setAll(data.getFirstname() + " " + data.getLastname() + " (" + data.getEmail() + ")");
             if (users == null) {
+
                 users = userRepository.save(data);
 
                 Date date = new Date();
